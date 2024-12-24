@@ -235,12 +235,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //This method is called when the activity is no longer in the foreground
-    override fun onPause() {
-        super.onPause()
-        //If the timer is initialized, cancel it to pause the game
-        if (this::timer.isInitialized) {
-            timer.cancel()
-        }
-    }
 }
