@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameOverActivity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/game_over_BTN_start_over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_over_TXT_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/default_margin"
+        android:backgroundTint="@color/black"
+        android:text="@string/start_over"
+        android:textSize="@dimen/button_text_size" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/game_over_TXT_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/game_over"
+        android:textSize="@dimen/text_title_size"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/game_over_IMG_referee"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_above="@id/game_over_TXT_title"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/default_margin"
+        app:srcCompat="@drawable/referee" />
+
+</RelativeLayout>

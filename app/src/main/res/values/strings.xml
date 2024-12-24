@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BasketballRun</string>
+    <string name="start_over">Start Over</string>
+    <string name="game_over">Game Over!</string>
+</resources>
