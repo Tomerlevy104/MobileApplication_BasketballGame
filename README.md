@@ -1,5 +1,7 @@
 # Basketball Game - Mobile Applications Course Project
 
+<a href="https://ibb.co/3B6QBhq"><img src="https://i.ibb.co/3B6QBhq/Image-For-Read-Me.jpg" alt="Image-For-Read-Me" border="0"></a>
+
 Welcome to my first game! In this exciting challenge, you'll need to dodge the defender and make sure they don't steal your ball. This project is part of the "Mobile Applications" course at Afeka College and was developed as an Android-based mobile game using Android Studio.
 
 ## Project Overview
