@@ -1,54 +1,79 @@
 # Basketball Game - Mobile Applications Course Project
 
-Welcome to my first game! In this exciting challenge, you'll need to dodge the defender and make sure they don’t steal your ball.
-This project is part of the "Mobile Applications" course at Afeka College and was developed as an Android-based mobile game using Android Studio.
+Welcome to my first game! In this exciting challenge, you'll need to dodge the defender and make sure they don't steal your ball. This project is part of the "Mobile Applications" course at Afeka College and was developed as an Android-based mobile game using Android Studio.
 
 ## Project Overview
 
-The game involves a **player** (represented by a basketball) that needs to avoid obstacles (represented by defense players) trying to steal the ball. The player must navigate the court and avoid the defenders, who move towards the ball in an attempt to steal it. The game is over when the player loses all lives due to collisions with the defenders.
-
-The game is built using **Kotlin** and developed in **Android Studio**. The app makes use of UI components like buttons, image views, and timers to manage game logic, display obstacles, and update the ball's position.
+The game involves a **player** (represented by a basketball) that needs to avoid obstacles (represented by defense players) trying to steal the ball. Players can choose between button controls or sensor-based controls, where tilting the device moves the ball. The game features a global leaderboard that tracks high scores along with the locations where they were achieved.
 
 ### Technologies Used:
 - **Programming Language:** Kotlin
 - **IDE:** Android Studio
 - **XML:** For designing UI layouts
+- **Google Maps API:** For displaying score locations
+- **SharedPreferences:** For persistent leaderboard data
 
 ## How to Run the Project
 
 1. **Clone or Download the Repository**:
-    - You can clone this repository using the following command:
-      ```bash
-      git clone https://github.com/yourusername/basketball-game.git
-      ```
-    - Or simply download the ZIP file of this repository from GitHub.
+   ```bash
+   git clone https://github.com/yourusername/basketball-game.git
+   ```
+   Or simply download the ZIP file of this repository from GitHub.
 
-2. **Open in Android Studio**:
-    - Open Android Studio, click on **File > Open** and select the folder where you cloned/downloaded the project.
+2. **Set Up Google Maps API Key**:
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select an existing one
+   - Enable the Maps SDK for Android
+   - Create credentials (API key)
+   - Open `AndroidManifest.xml` and verify the metadata tag exists:
+     ```xml
+     <meta-data
+         android:name="com.google.android.geo.API_KEY"
+         android:value="${MAPS_API_KEY}"/>
+     ```
 
-3. **Build the Project**:
-    - In Android Studio, click on **Build > Make Project** to compile the project.
+3. **Open in Android Studio**:
+   - Open Android Studio
+   - Click on **File > Open** and select the project folder
+   - Wait for the project to sync
 
-4. **Run the Application**:
-    - Connect your Android device or use the Android emulator.
-    - Click on **Run > Run 'app'** (or press Shift + F10) to launch the game.
+4. **Build the Project**:
+   - Click on **Build > Make Project** to compile
+   - Ensure all dependencies are properly synced
 
-5. **Start Playing**:
-    - Once the game is running, you can control the ball by pressing the **Left** or **Right** buttons to move it and avoid the defense players. Your goal is to survive and keep the ball away from the defenders.
+5. **Run the Application**:
+   - Connect your Android device (enable USB debugging) or use the emulator
+   - Ensure your device/emulator has:
+     - Location services enabled
+     - Accelerometer (for sensor controls)
+   - Click **Run > Run 'app'** (or press Shift + F10)
+
+6. **Start Playing**:
+   - Enter your name
+   - Choose your control mode (Buttons/Sensors)
+   - Select difficulty level (Easy/Hard)
+   - Use buttons or tilt your device to control the ball
+   - Avoid the defenders and try to achieve a high score!
 
 ## Game Instructions
 
 - **Objective**: Control the basketball to avoid collisions with the defense players.
-- **Control**:
-    - Use the **Left** button to move the ball left.
-    - Use the **Right** button to move the ball right.
-    - Avoid the defense players who try to steal the ball.
+- **Controls**:
+  - **Button Mode**:
+    - Use the **Left** button to move left
+    - Use the **Right** button to move right
+  - **Sensor Mode**:
+    - Tilt device left/right to move the ball
+    - Tilt forward/backward to adjust game speed
 - **Game Over**: The game ends when all lives are lost.
 
 ### Notes:
-- The game has a timer that controls the movement of obstacles.
-- Each time a defender successfully reaches the ball, a "bad collision" is recorded and a life is lost.
-- The game displays a message when a collision occurs, and you can continue to play until all lives are lost.
+- The game has a timer that controls the movement of obstacles
+- Each defender collision costs one life
+- Your high scores are saved with your current location
+- View the leaderboard to see where other players achieved their high scores
+- Location permission is required to save your score location
 
 ---
 
