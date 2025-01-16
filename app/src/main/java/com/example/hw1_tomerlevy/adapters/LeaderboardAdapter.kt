@@ -1,5 +1,6 @@
 package com.example.hw1_tomerlevy.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class LeaderboardAdapter(private val onPlayerSelected: ((Player) -> Unit)? = nul
     }
 
     //link the data to the view for each row
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: LeaderboardViewHolder, position: Int) {
         val player = players[position]
         holder.rankTV.text = (position + 1).toString()
@@ -48,6 +50,7 @@ class LeaderboardAdapter(private val onPlayerSelected: ((Player) -> Unit)? = nul
     override fun getItemCount() = players.size
 
     //function for update player's list
+    @SuppressLint("NotifyDataSetChanged")
     fun updatePlayers(newPlayers: List<Player>) {
         players = newPlayers
         notifyDataSetChanged()  //notifies RecyclerView that the data has changed and the view should be refreshed.

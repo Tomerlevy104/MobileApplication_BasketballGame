@@ -77,8 +77,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/start_page_hint_enter_your_name"
                     android:inputType="text"
-                    android:padding="8dp"
-                    android:textColor="@color/white"
+                    android:padding="@dimen/default_padding"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/start_page_txt_color"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

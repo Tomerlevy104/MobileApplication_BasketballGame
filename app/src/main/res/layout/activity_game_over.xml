@@ -29,6 +29,18 @@
         android:textColor="@color/orange"
         android:textStyle="bold" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/game_over_TXT_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/game_over_IMG_referee"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:textSize="@dimen/game_over_text_title_size"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        tools:text="000"/>
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/game_over_IMG_referee"
         android:layout_width="180dp"

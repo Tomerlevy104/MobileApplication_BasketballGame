@@ -1,6 +1,7 @@
 package com.example.hw1_tomerlevy
 
 import android.content.Intent
+import android.icu.text.NumberFormat
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -170,7 +171,7 @@ class MainActivity : AppCompatActivity(), TiltCallback {
             }
             ObstacleType.GOODOBSTACLE -> {
                 gameManager.addPoints()
-                main_LBL_score.text = gameManager.playerScore.toString()
+                main_LBL_score.text = NumberFormat.getInstance().format(gameManager.playerScore)
             }
             ObstacleType.NONE -> {
             //do nothing
