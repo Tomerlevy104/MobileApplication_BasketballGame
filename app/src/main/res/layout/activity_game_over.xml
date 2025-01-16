@@ -15,7 +15,7 @@
         android:layout_below="@id/game_over_TXT_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/default_margin"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/orange"
         android:text="@string/start_over"
         android:textSize="@dimen/game_over_start_over_button_text_size" />
 
