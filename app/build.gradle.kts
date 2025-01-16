@@ -45,4 +45,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // Google Play Services
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+
+    //GSON:
+    implementation (libs.gson)
+
+    //Glide:
+    implementation (libs.glide)
 }

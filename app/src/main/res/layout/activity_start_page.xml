@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".StartPageActivity"
+    android:layoutDirection="ltr">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/start_cardView_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="@dimen/start_page_margin_top_main_cardview"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/default_padding">
+
+            <!-- Title -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="4dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/game_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:letterSpacing="0.1"
+                    android:padding="@dimen/default_padding"
+                    android:background="@color/orange"
+                    android:text="@string/start_app_tittle"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/tittle_text_size"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="2"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Name Input -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/default_margin">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_page_name_lbl"
+                    android:textColor="@color/start_page_txt_color"
+                    android:textSize="@dimen/start_page_lbl_text_size"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="@dimen/default_margin"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/start_editText_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/start_page_hint_enter_your_name"
+                    android:inputType="text"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/start_page_txt_color"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Game Settings -->
+
+            <!-- Mode Selection -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/default_margin">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/text_mode"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_mode_tittle"
+                    android:textSize="@dimen/start_page_lbl_text_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/start_page_txt_color"/>
+
+                <RadioGroup
+                    android:id="@+id/start_radioGroup_mode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/default_margin">
+
+                    <RadioButton
+                        android:id="@+id/start_radioButton_buttons"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/start_page_radio_button_tint"
+                        android:text="@string/start_mode_option1"
+                        android:textColor="@color/start_page_txt_color"
+                        android:textStyle="bold"/>
+
+                    <RadioButton
+                        android:id="@+id/start_radioButton_sensors"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/start_page_radio_button_tint"
+                        android:text="@string/start_mode_option2"
+                        android:textColor="@color/start_page_txt_color"
+                        android:textStyle="bold"/>
+                </RadioGroup>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Level Selection -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/start_page_margin_bottom_level">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/text_game_level"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_level_tittle"
+                    android:textSize="@dimen/start_page_lbl_text_size"
+                    android:textStyle="bold"
+                    android:textColor="@color/start_page_txt_color"/>
+
+                <RadioGroup
+                    android:id="@+id/start_radioGroup_level"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/default_margin">
+
+                    <RadioButton
+                        android:id="@+id/start_radioButton_easy"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/start_page_radio_button_tint"
+                        android:text="@string/start_level_option1"
+                        android:textColor="@color/start_page_txt_color"
+                        android:textStyle="bold"/>
+
+                    <RadioButton
+                        android:id="@+id/start_radioButton_hard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/start_page_radio_button_tint"
+                        android:text="@string/start_level_option2"
+                        android:textColor="@color/start_page_txt_color"
+                        android:textStyle="bold"/>
+                </RadioGroup>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Buttons -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/start_BTN_startGame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/start_start_game_button"
+                android:textSize="@dimen/start_page_button_txt_size"
+                android:textStyle="bold"
+                android:backgroundTint="@color/start_page_txt_color"
+                android:padding="@dimen/default_padding"
+                app:cornerRadius="@dimen/button_corner_radius"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/start_BTN_Top10Records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/start_page_top_10_records_button_text"
+                android:textSize="@dimen/start_page_button_txt_size"
+                android:textStyle="bold"
+                android:backgroundTint="@color/start_page_txt_color"
+                android:padding="@dimen/default_padding"
+                app:cornerRadius="@dimen/button_corner_radius"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/start_IMG_ball"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:rotationX="180"
+        android:translationY="175dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ball_start_page"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.example.hw1_tomerlevy
 
 import android.app.Application
-import com.example.hw1_tomerlevy.utilities.SignalManager
+import com.example.hw1_tomerlevy.managers.SignalManager
 
 class App : Application(){
     override fun onCreate() {

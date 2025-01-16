@@ -42,6 +42,18 @@
             app:srcCompat="@drawable/heart" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/main_LBL_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="000"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textSize="@dimen/game_over_text_title_size"
+        android:textStyle="bold"/>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/buttons_id"
         android:layout_width="match_parent"
@@ -62,7 +74,7 @@
             android:backgroundTint="@color/black"
             app:icon="@drawable/left"
             app:iconGravity="start"
-            app:iconTint="@color/background_icon_tint" />
+            app:iconTint="@color/orange" />
 
         <View
             android:layout_width="0dp"
@@ -80,11 +92,11 @@
             android:backgroundTint="@color/black"
             app:icon="@drawable/right"
             app:iconGravity="end"
-            app:iconTint="@color/background_icon_tint" />
+            app:iconTint="@color/orange" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/allColumns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,19 +104,21 @@
         android:layout_below="@+id/lives"
         android:layout_margin="@dimen/default_margin"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="18dp">
-
-        <!-- column0 -->
+        android:layout_marginBottom="0dp">
 
         <!-- ...................................................................... -->
 
-        <!-- column1 -->
+        <!-- column0 -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/column0"
             android:layout_width="@dimen/obstacle_size"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/column1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <!-- row 0 column 0 -->
             <androidx.appcompat.widget.AppCompatImageView
@@ -197,12 +211,17 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- column 1 -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/column1"
             android:layout_width="@dimen/obstacle_size"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/column2"
+            app:layout_constraintStart_toEndOf="@id/column0"
+            app:layout_constraintTop_toTopOf="parent">
 
             <!-- row 0 column 1 -->
             <androidx.appcompat.widget.AppCompatImageView
@@ -289,7 +308,7 @@
                 android:id="@+id/main_IMG_ball1"
                 android:layout_width="@dimen/ball_size_width"
                 android:layout_height="@dimen/ball_size_height"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:srcCompat="@drawable/ball" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -300,9 +319,13 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/column2"
             android:layout_width="@dimen/obstacle_size"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/column3"
+            app:layout_constraintStart_toEndOf="@id/column1"
+            app:layout_constraintTop_toTopOf="parent">
 
             <!-- row 0 column 2 -->
             <androidx.appcompat.widget.AppCompatImageView
@@ -389,10 +412,218 @@
                 android:id="@+id/main_IMG_ball2"
                 android:layout_width="@dimen/ball_size_width"
                 android:layout_height="@dimen/ball_size_height"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ball" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- column3 -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/column3"
+            android:layout_width="@dimen/obstacle_size"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/column4"
+            app:layout_constraintStart_toEndOf="@id/column2"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- row 0 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_0_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 1 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_1_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 2 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_2_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 3 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_3_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 4 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_4_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 5 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_5_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 6 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_6_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 7 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_7_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 8 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_8_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 9 column 3 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_9_3"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+
+            <!-- row 10 column 3 (ball) -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_IMG_ball3"
+                android:layout_width="@dimen/ball_size_width"
+                android:layout_height="@dimen/ball_size_height"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/ball" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </RelativeLayout>
+
+        <!-- column4 -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/column4"
+            android:layout_width="@dimen/obstacle_size"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/column3"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- row 0 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_0_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 1 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_1_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 2 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_2_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 3 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_3_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 4 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_4_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 5 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_5_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 6 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_6_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 7 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_7_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 8 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_8_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+            <!-- row 9 column 4 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/obstacle_defender_9_4"
+                android:layout_width="@dimen/obstacle_size"
+                android:layout_height="@dimen/obstacle_size"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/basketball_player_defence" />
+
+
+            <!-- row 10 column 4 (ball) -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_IMG_ball4"
+                android:layout_width="@dimen/ball_size_width"
+                android:layout_height="@dimen/ball_size_height"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ball" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

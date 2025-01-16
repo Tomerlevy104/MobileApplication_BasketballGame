@@ -3,41 +3,48 @@ package com.example.hw1_tomerlevy
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import com.example.hw1_tomerlevy.logic.GameManager
+import com.example.hw1_tomerlevy.interfaces.TiltCallback
+import com.example.hw1_tomerlevy.managers.GameManager
+import com.example.hw1_tomerlevy.managers.LeaderboardManager
+import com.example.hw1_tomerlevy.managers.ObstacleManager
+import com.example.hw1_tomerlevy.utilities.ObstacleType
 import com.example.hw1_tomerlevy.utilities.Constants
-import com.example.hw1_tomerlevy.utilities.SignalManager
+import com.example.hw1_tomerlevy.managers.SignalManager
+import com.example.hw1_tomerlevy.utilities.SingleSoundPlayer
+import com.example.hw1_tomerlevy.utilities.TiltDetector
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import java.util.Timer
 import java.util.TimerTask
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TiltCallback {
 
     private lateinit var main_BTN_Left: MaterialButton
-
     private lateinit var main_BTN_Right: MaterialButton
-
     private lateinit var main_IMG_hearts: Array<AppCompatImageView>
-
-    private lateinit var main_IMG_c0: Array<AppCompatImageView>
-
-    private lateinit var main_IMG_c1: Array<AppCompatImageView>
-
-    private lateinit var main_IMG_c2: Array<AppCompatImageView>
-
+    private lateinit var main_LBL_score: MaterialTextView
+    private lateinit var main_IMG_balls: Array<AppCompatImageView>
     private lateinit var gameManager: GameManager
-
+    private lateinit var obstacleManager: ObstacleManager
     private lateinit var timer: Timer
+    private lateinit var soundPlayer: SingleSoundPlayer
+    private lateinit var tiltDetector: TiltDetector
+    private var ratio: Int = Constants.Level.RATIOEASY
+    private var obstacleCounter = 0
+    private var isSensorMode: Boolean = false
+    private var baseSpeed: Long = Constants.Level.EXRUNTIMEEASY //default speed
+    private var currentSpeed: Long = baseSpeed //current speed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) //connect the activity to the XML file ("activity_main.xml")
-        findViews() //locates the graphic elements defined in XML and connect them to variables in the class
-        main_IMG_c1[Constants.IMG.BALL_ROW].setImageResource(R.drawable.ball) //initial the ball position
-        gameManager = GameManager(main_IMG_hearts.size)
-        initViews() //initiating various actions, such as setting actions for buttons
+        setContentView(R.layout.activity_main)
+        LeaderboardManager.init(this)
+        findViews()
+        initializeGame()
+        initControls()
+        startGame()
     }
 
     private fun findViews() {
@@ -46,201 +53,189 @@ class MainActivity : AppCompatActivity() {
         main_IMG_hearts = arrayOf(
             findViewById(R.id.main_IMG_heart1),
             findViewById(R.id.main_IMG_heart2),
-            findViewById(R.id.main_IMG_heart3)
-        )
+            findViewById(R.id.main_IMG_heart3))
 
-        //column 0
-        main_IMG_c0 = arrayOf(
-            findViewById(R.id.obstacle_defender_0_0),
-            findViewById(R.id.obstacle_defender_1_0),
-            findViewById(R.id.obstacle_defender_2_0),
-            findViewById(R.id.obstacle_defender_3_0),
-            findViewById(R.id.obstacle_defender_4_0),
-            findViewById(R.id.obstacle_defender_5_0),
-            findViewById(R.id.obstacle_defender_6_0),
-            findViewById(R.id.obstacle_defender_7_0),
-            findViewById(R.id.obstacle_defender_8_0),
-            findViewById(R.id.obstacle_defender_9_0),
-            findViewById(R.id.main_IMG_ball0)
-        )
+        main_LBL_score = findViewById(R.id.main_LBL_score)
 
-        //column 1
-        main_IMG_c1 = arrayOf(
-            findViewById(R.id.obstacle_defender_0_1),
-            findViewById(R.id.obstacle_defender_1_1),
-            findViewById(R.id.obstacle_defender_2_1),
-            findViewById(R.id.obstacle_defender_3_1),
-            findViewById(R.id.obstacle_defender_4_1),
-            findViewById(R.id.obstacle_defender_5_1),
-            findViewById(R.id.obstacle_defender_6_1),
-            findViewById(R.id.obstacle_defender_7_1),
-            findViewById(R.id.obstacle_defender_8_1),
-            findViewById(R.id.obstacle_defender_9_1),
-            findViewById(R.id.main_IMG_ball1)
-        )
+        main_IMG_balls = arrayOf(
+            findViewById(R.id.main_IMG_ball0),
+            findViewById(R.id.main_IMG_ball1),
+            findViewById(R.id.main_IMG_ball2),
+            findViewById(R.id.main_IMG_ball3),
+            findViewById(R.id.main_IMG_ball4))
 
-        //column 2
-        main_IMG_c2 = arrayOf(
-            findViewById(R.id.obstacle_defender_0_2),
-            findViewById(R.id.obstacle_defender_1_2),
-            findViewById(R.id.obstacle_defender_2_2),
-            findViewById(R.id.obstacle_defender_3_2),
-            findViewById(R.id.obstacle_defender_4_2),
-            findViewById(R.id.obstacle_defender_5_2),
-            findViewById(R.id.obstacle_defender_6_2),
-            findViewById(R.id.obstacle_defender_7_2),
-            findViewById(R.id.obstacle_defender_8_2),
-            findViewById(R.id.obstacle_defender_9_2),
-            findViewById(R.id.main_IMG_ball2)
-        )
+        val columns = arrayOf(
+            getColumnViews(0),
+            getColumnViews(1),
+            getColumnViews(2),
+            getColumnViews(3),
+            getColumnViews(4))
+
+        obstacleManager = ObstacleManager(columns.toList())
     }
 
-    private fun initViews() {
-        //click on the left button
+    //function that returns an array of ImageViews for a specific column
+    private fun getColumnViews(colIndex: Int): Array<AppCompatImageView> {
+        return Array(Constants.Obstacles.NUMBERSOFROWS-1) { row ->  //creates array of 10 ImageViews for a column
+            findViewById<AppCompatImageView>( //finds view in layout by ID
+                resources.getIdentifier(  //gets resource ID dynamically
+                    "obstacle_defender_${row}_${colIndex}",  //ID pattern: obstacle_defender_[row]_[column]
+                    "id",  //looking for ID resource type
+                    packageName  //within this app's package
+                )
+            )
+        }
+    }
+
+    private fun initializeGame() {
+        gameManager = GameManager(main_IMG_hearts.size)
+        soundPlayer = SingleSoundPlayer(this)
+
+        intent.getStringExtra("GAME_LEVEL")?.let { gameLevel ->
+            ratio = when (gameLevel) {
+                "easy" -> Constants.Level.RATIOEASY
+                "hard" -> Constants.Level.RATIOHARD
+                else -> Constants.Level.RATIOEASY
+            }
+            baseSpeed = when (gameLevel) {
+                "easy" -> Constants.Level.EXRUNTIMEEASY
+                "hard" -> Constants.Level.EXRUNTIMEHARD
+                else -> Constants.Level.EXRUNTIMEEASY
+            }
+            this.currentSpeed = baseSpeed //initialize the speed according to player's selection
+        }
+
+        isSensorMode = intent.getStringExtra("GAME_MODE") == "sensors"
+
+        if (isSensorMode) {
+            tiltDetector = TiltDetector(this, this)
+            main_BTN_Left.visibility = View.GONE
+            main_BTN_Right.visibility = View.GONE
+        }
+    }
+
+    //init left and right buttons
+    private fun initControls() {
         main_BTN_Left.setOnClickListener {
             if (gameManager.currentIndexOfBall > 0) {
                 gameManager.moveLeft()
-                updateBallPosition(gameManager.currentIndexOfBall)
+                updateBallPosition()
             }
         }
-        //click on the right button
         main_BTN_Right.setOnClickListener {
-            if (gameManager.currentIndexOfBall < 2) {
+            if (gameManager.currentIndexOfBall < 4) {
                 gameManager.moveRight()
-                updateBallPosition(gameManager.currentIndexOfBall)
+                updateBallPosition()
             }
         }
-        startGame()
+        updateBallPosition()
     }
 
     private fun startGame() {
-        addNewObstacle()
-    }
-
-    //function for moving the ball
-    private fun updateBallPosition(currentIndex: Int) {
-        val columns = listOf(main_IMG_c0, main_IMG_c1, main_IMG_c2)
-        for (c in columns.indices) {
-            val ballImageView = columns[c][Constants.IMG.BALL_ROW]
-            if (c == currentIndex) {
-                ballImageView.visibility = View.VISIBLE
-            } else {
-                ballImageView.visibility = View.INVISIBLE
-            }
-        }
-    }
-
-    private fun addNewObstacle() {
-        var obstacleCounter = 0  //obstacle counter for knowing that each 2 sec adding new obstacle
         timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
                     obstacleCounter++
-                    //each 2 sec add new obstacle
-                    if (obstacleCounter % 4 == 0) {
-                        addObstaclesToFirstRow() //This function is executed every 4 clock cycles.
-                    }
-                    moveObstacleDown() //This function is executed every 1 clock cycles.
-                }
-            }
-        }, Constants.Timer.DELAY, 500) //The timer executes "run" function every 0.5 sec
-    }
+                    obstacleManager.addObstacleToRandomCol(ratio, obstacleCounter)
+                    val collisionType = obstacleManager.moveObstaclesDown(gameManager.currentIndexOfBall)
 
-    private fun addObstaclesToFirstRow() {
-        //random a column
-        val randomColumn = (0..2).random()
-        val theColumn = when (randomColumn) {
-            0 -> main_IMG_c0
-            1 -> main_IMG_c1
-            else -> main_IMG_c2
-        }
-        //showing obstacle on the first row
-        theColumn[0].visibility = View.VISIBLE
-    }
-
-    //function for moving obstacles down
-    private fun moveObstacleDown() {
-        for (columnIndex in 0..2) {
-            val column = when (columnIndex) {
-                0 -> main_IMG_c0
-                1 -> main_IMG_c1
-                else -> main_IMG_c2
-            }
-
-            //for each row in the column (down of matrix to up)
-            for (i in (column.size - 1) downTo 1) {
-                if (column[i - 1].visibility == View.VISIBLE) {
-                    //check if it's the last row (ball row)
-                    if (i == column.size - 1) {
-                        //checking collision
-                        checkCollision(columnIndex)
-                        //previous obstacle - invisible
-                        column[i - 1].visibility = View.INVISIBLE
-                    } else {
-                        //moving the obstacle one row down
-                        column[i].visibility = View.VISIBLE
-                        column[i - 1].visibility = View.INVISIBLE
+                    if (collisionType != null) {
+                        handleCollision(collisionType) //check collision
                     }
                 }
             }
+        }, Constants.Timer.DELAY, this.currentSpeed)
+    }
+
+    private fun updateBallPosition() {
+        for (i in main_IMG_balls.indices) {
+            main_IMG_balls[i].visibility = if (i == gameManager.currentIndexOfBall) View.VISIBLE else View.INVISIBLE
         }
     }
 
-    //function for checking a collision - This function is only reached when the obstacle is in the last row.
-    private fun checkCollision(columnIndex: Int) {
-        //checking if the column is the same like ball column position
-        if (columnIndex == gameManager.currentIndexOfBall) {
-            //collision
-            gameManager.addBadCollision()
-            //update hearts view according to lifeCount
-            main_IMG_hearts[main_IMG_hearts.size - gameManager.badCollision].visibility =
-                View.INVISIBLE
-            //toast message
-            if (gameManager.badCollision > 0) {
-                toastAndVibrate()
+    private fun handleCollision(obstacleType: ObstacleType) {
+        when (obstacleType) {
+            ObstacleType.BADOBSTACLE -> {
+                soundPlayer.playSound(R.raw.bad_collision_referee_whistle_sound)
+                gameManager.addBadCollision()
+                if (gameManager.badCollision > 0) {
+                    main_IMG_hearts[main_IMG_hearts.size - gameManager.badCollision].visibility = View.INVISIBLE
+                    SignalManager.getInstance().toast("Oh No!")
+                    SignalManager.getInstance().vibrate()
+                }
+                if (gameManager.isGameOver){
+                    gameOver()
+                }
             }
-            //check if game over
-            if (gameManager.isGameOver) {
-                gameOver()
+            ObstacleType.GOODOBSTACLE -> {
+                gameManager.addPoints()
+                main_LBL_score.text = gameManager.playerScore.toString()
+            }
+            ObstacleType.NONE -> {
+            //do nothing
             }
         }
     }
 
-    //toast and vibrate function
-    private fun toastAndVibrate() {
-        SignalManager.getInstance().toast("Oh No!")
-        SignalManager.getInstance().vibrate()
+    //tilt option
+    override fun tiltX(value: Float) {
+        if (value > 3.0f && gameManager.currentIndexOfBall > 0) {
+            gameManager.moveLeft()
+            updateBallPosition()
+        } else if (value < -3.0f && gameManager.currentIndexOfBall < 4) {
+            gameManager.moveRight()
+            updateBallPosition()
+        }
+    }
+
+    override fun tiltY(value: Float) {
+        if (!isSensorMode) return
+        //calculate new speed due to tilt Y
+        val newSpeed = when {
+            value < -2.0f -> { //back tilt
+                //coerceAtLeast(50) - A function that ensures that the value is not less than 50
+                (baseSpeed * 0.3).toLong().coerceAtLeast(50)  //faster speed
+            }
+            value > 2.0f -> { //forth tilt
+                (baseSpeed * 2.0).toLong().coerceAtMost(1000) //slower speed
+            }
+            else -> baseSpeed   //no tilt
+        }
+
+        this.currentSpeed = newSpeed //update the speed
+        restartTimer()
+
+    }
+
+    //reinitialize the timer
+    private fun restartTimer() {
+        timer.cancel()
+        startGame()
     }
 
     private fun gameOver() {
-        timer.cancel()
-        //move to Game Over screen
-        val intent = Intent(this, GameOverActivity::class.java)
+        val intent = Intent(this, GameOverActivity::class.java).apply {
+            putExtra("PLAYER_NAME", intent.getStringExtra("PLAYER_NAME"))
+            putExtra("SCORE", gameManager.playerScore)
+            putExtra("GAME_MODE", intent.getStringExtra("GAME_MODE"))
+        }
         startActivity(intent)
         finish()
     }
 
-    //This method is called when the activity becomes active and ready for user interaction
     override fun onResume() {
         super.onResume()
-        //Check if the timer has been initialized
-        if (this::timer.isInitialized) {
-            //Resume the timer if it has already been initialized
-            timer.cancel() //cancel the previous timer
-            addNewObstacle() //start new timer
-        } else {
-            //Start the game if the timer is not initialized
+        if (isSensorMode) tiltDetector.start()
+        if (::timer.isInitialized) {
+            timer.cancel()
             startGame()
         }
     }
 
-    //This method is called when the activity is no longer in the foreground
     override fun onPause() {
         super.onPause()
-        //If the timer is initialized, cancel it to pause the game
-        if (this::timer.isInitialized) {
-            timer.cancel()
-        }
+        if (isSensorMode) tiltDetector.stop()
+        if (::timer.isInitialized) timer.cancel()
     }
 }

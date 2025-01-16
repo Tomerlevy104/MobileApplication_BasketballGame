@@ -2,5 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_icon_tint">#FFA726</color>
+    <color name="orange">#FF8F00</color>
+    <color name="background_color">#2C2C2C</color>
+    <color name="start_page_txt_color">#808080</color>
+    <color name="start_page_radio_button_tint">#FFA726</color>
+
 </resources>

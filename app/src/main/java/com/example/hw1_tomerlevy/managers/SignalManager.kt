@@ -1,6 +1,5 @@
-package com.example.hw1_tomerlevy.utilities
+package com.example.hw1_tomerlevy.managers
 
-import android.R
 import android.content.Context
 import android.content.Context.VIBRATOR_MANAGER_SERVICE
 import android.content.Context.VIBRATOR_SERVICE
@@ -34,8 +33,8 @@ class SignalManager private constructor(context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 //create a single vibration effect
                 val oneShotVibrationEffect = VibrationEffect.createOneShot(
-                    500,    //Duration
-                    VibrationEffect.DEFAULT_AMPLITUDE  // Vibration strength
+                    500,    //duration
+                    VibrationEffect.DEFAULT_AMPLITUDE  //vibration strength
                 )
 
                 //trigger the one-shot vibration
@@ -43,7 +42,7 @@ class SignalManager private constructor(context: Context) {
 
             } else {
                 //for older Android versions, use the simple vibrate method
-                vibrator.vibrate(500)  // Vibrate for 500 milliseconds
+                vibrator.vibrate(500)  //vibrate for 500 milliseconds
             }
         }
     }

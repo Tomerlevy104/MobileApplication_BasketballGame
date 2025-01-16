@@ -9,6 +9,16 @@
     <dimen name="ball_size_width">48dp</dimen>
     <dimen name="ball_size_height">48dp</dimen>
     <dimen name="obstacle_size">48dp</dimen>
-    <dimen name="button_text_size">20sp</dimen>
-    <dimen name="text_title_size">30sp</dimen>
+    <dimen name="game_over_start_over_button_text_size">20sp</dimen>
+    <dimen name="game_over_text_title_size">30sp</dimen>
+    <dimen name="tittle_text_size">30sp</dimen>
+    <dimen name="start_page_margin_top_main_cardview">40dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="start_page_lbl_text_size">16sp</dimen>
+    <dimen name="start_page_margin_bottom_level">24dp</dimen>
+    <dimen name="start_page_button_txt_size">18sp</dimen>
+    <dimen name="button_corner_radius">8dp</dimen>
+    <dimen name="high_score_tittle_margin_bottom">24dp</dimen>
+    <dimen name="item_padding">12dp</dimen>
 </resources>

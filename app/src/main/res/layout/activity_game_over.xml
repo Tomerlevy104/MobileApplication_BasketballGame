@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".GameOverActivity">
 
     <com.google.android.material.button.MaterialButton
@@ -16,15 +17,16 @@
         android:layout_marginTop="@dimen/default_margin"
         android:backgroundTint="@color/black"
         android:text="@string/start_over"
-        android:textSize="@dimen/button_text_size" />
+        android:textSize="@dimen/game_over_start_over_button_text_size" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/game_over_TXT_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/game_over"
-        android:textSize="@dimen/text_title_size"
+        android:text="@string/game_over_game_over_text"
+        android:textSize="@dimen/game_over_text_title_size"
+        android:textColor="@color/orange"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -32,6 +34,7 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_above="@id/game_over_TXT_title"
+        android:background="@color/white"
         android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/default_margin"
         app:srcCompat="@drawable/referee" />

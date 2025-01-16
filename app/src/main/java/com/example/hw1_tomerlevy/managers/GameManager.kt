@@ -1,8 +1,11 @@
-package com.example.hw1_tomerlevy.logic
+package com.example.hw1_tomerlevy.managers
 
-class GameManager(private val lifeCount: Int = 3) {
+import com.example.hw1_tomerlevy.utilities.Constants
 
-    var currentIndexOfBall: Int = 1
+class GameManager(private val lifeCount: Int = Constants.Game.LIFE) {
+
+    var playerScore: Int = 0
+    var currentIndexOfBall: Int = 2
         private set //there is no Setter for "currentIndex". you can change currentIndex only from this class
 
     var badCollision: Int = 0
@@ -21,5 +24,9 @@ class GameManager(private val lifeCount: Int = 3) {
 
     fun moveRight() {
         currentIndexOfBall++
+    }
+
+    fun addPoints(){
+        playerScore+= Constants.Score.POINT
     }
 }

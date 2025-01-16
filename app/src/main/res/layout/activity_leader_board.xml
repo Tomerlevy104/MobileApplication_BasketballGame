@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Frame for the RecyclerView -->
+    <FrameLayout
+        android:id="@+id/lb_FRAME_records"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background_color"
+        android:padding="@dimen/default_padding"
+        />
+
+    <!-- Frame for the map -->
+    <FrameLayout
+        android:id="@+id/lb_FRAME_map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background_color"
+        android:padding="@dimen/default_padding"
+        />
+
+    <!-- Back button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/leaderboard_BTN_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin"
+        android:backgroundTint="@color/orange"
+        android:text="@string/leader_board_back_text"/>
+
+</LinearLayout>

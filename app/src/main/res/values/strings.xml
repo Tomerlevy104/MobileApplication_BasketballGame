@@ -1,5 +1,23 @@
 <resources>
-    <string name="app_name">BasketballRun</string>
+    <string name="app_name">BasketGo</string>
     <string name="start_over">Start Over</string>
-    <string name="game_over">Game Over!</string>
+    <string name="game_over_game_over_text">Game Over!</string>
+    <string name="start_edit_text_full_name">Full name</string>
+    <string name="start_mode_tittle">Mode</string>
+    <string name="start_app_tittle">BasketGo</string>
+    <string name="start_mode_option1">Buttons</string>
+    <string name="start_mode_option2">Sensors</string>
+    <string name="start_level_tittle">Level</string>
+    <string name="start_level_option1">Easy</string>
+    <string name="start_level_option2">Hard</string>
+    <string name="start_start_game_button">Start game</string>
+    <string name="leader_board_back_text">Back</string>
+    <string name="start_page_name_lbl">Name</string>
+    <string name="start_page_hint_enter_your_name">Enter your name</string>
+    <string name="start_page_top_10_records_button_text">Top 10 Records</string>
+    <string name="high_score_frg_top_10_scores_tittle_text">Top 10 Scores</string>
+    <string name="high_score_frg_header_tittle_rank_text">Rank</string>
+    <string name="high_score_frg_header_tittle_name_text">Name</string>
+    <string name="high_score_frg_header_tittle_score_text">Score</string>
+    <string name="high_score_frg_header_tittle_mode_text">Mode</string>
 </resources>
